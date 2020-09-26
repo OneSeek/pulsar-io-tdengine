@@ -16,7 +16,6 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-name: redis
+name: TDengine
 description: Writes data into TDengine
 sinkClass: org.apache.pulsar.io.tdengine.sink.TDengineSink
-sinkConfigClass: org.apache.pulsar.io.tdengine.sink.TDengineSinkConfig

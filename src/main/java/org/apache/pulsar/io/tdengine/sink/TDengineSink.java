@@ -1,4 +1,4 @@
-package org.apache.pulsar.io.tdengine;
+package org.apache.pulsar.io.tdengine.sink;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -12,33 +12,32 @@ import org.apache.pulsar.io.core.annotations.IOType;
 import java.util.Map;
 
 @Connector(
-        name = "tdenginedb",
+        name = "tdengine",
         type = IOType.SINK,
-        help = "The TDengineDBGenericRecordSink is used for moving messages from Pulsar to InfluxDB.",
-        configClass = TDengineDBSinkConfig.class
+        help = "The TDengineDBGenericRecordSink is used for moving messages from Pulsar to TDengineDB.",
+        configClass = TDengineSinkConfig.class
 )
 @Slf4j
-public class TDengineDBSink implements Sink<GenericRecord> {
-    protected Sink<GenericRecord> sink;
+public class TDengineSink implements Sink<GenericRecord> {
+    private TSDBSession tsdbSession;
     @Override
     public void open(Map<String, Object> map, SinkContext sinkContext) throws Exception {
 
-        val config = TDengineDBSinkConfig.load(map);
+        val config = TDengineSinkConfig.load(map);
         config.validate();
-        sink = new TDengineDBSink();
 
-        sink.open(map, sinkContext);
+        tsdbSession.create(config);
+
     }
 
     @Override
     public void write(Record<GenericRecord> record) throws Exception {
-        sink.write(record);
+
     }
 
 
     @Override
     public void close() throws Exception {
-        sink.close();
-    }
 
+    }
 }
