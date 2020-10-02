@@ -14,8 +14,8 @@ import java.util.Map;
 @Connector(
         name = "tdengine",
         type = IOType.SINK,
-        help = "The TDengineDBGenericRecordSink is used for moving messages from Pulsar to TDengineDB.",
-        configClass = TDengineSinkConfig.class
+        help = "The TDengineSink is used for moving messages from Pulsar to TDengineDB.",
+        configClass = TDengineSink.class
 )
 @Slf4j
 public class TDengineSink implements Sink<GenericRecord> {
@@ -32,7 +32,7 @@ public class TDengineSink implements Sink<GenericRecord> {
 
     @Override
     public void write(Record<GenericRecord> record) throws Exception {
-
+        tsdbSession.write(record);
     }
 
 

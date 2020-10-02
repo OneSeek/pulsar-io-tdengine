@@ -34,7 +34,7 @@ import java.util.Optional;
 /**
  * TDengine Sink test
  */
-@Slf4j
+//@Slf4j
 public class TDengineSinkTest {
 
 
@@ -66,7 +66,7 @@ public class TDengineSinkTest {
 
         // write should success.
 //        sink.write(record);
-        log.info("executed write");
+//        log.info("executed write");
 
         // sleep to wait backend flush complete
         Thread.sleep(1000);
