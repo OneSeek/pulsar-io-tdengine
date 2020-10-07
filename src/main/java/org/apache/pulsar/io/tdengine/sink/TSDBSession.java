@@ -2,31 +2,28 @@ package org.apache.pulsar.io.tdengine.sink;
 
 import org.apache.pulsar.client.api.schema.GenericRecord;
 import org.apache.pulsar.functions.api.Record;
+import org.apache.pulsar.io.tdengine.sink.utils.HttpClientPoolUtil;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 public class TSDBSession {
     TDengineSinkConfig config;
-    Connection conn;
-    Statement stmt;
-    public void create(TDengineSinkConfig config) throws SQLException {
+    String url;
+    public void create(TDengineSinkConfig config){
         this.config = config;
-        String jdbcUrl = config.getJdbcUrl()+"?user="+config.getUserName()
-                +"?password="+config.getPassword();
 
-        conn = DriverManager.getConnection(jdbcUrl);
-
-        stmt = conn.createStatement();
+        //http://<ip>:6041/rest/login/<username>/<password>
+        url = config.getUrl()+"/rest/login/"+config.getUserName()
+                +"/"+config.getPassword();
+        System.out.println(url);
 
     }
 
-    public void write(Record<GenericRecord> record) throws SQLException {
+    public void write(Record<GenericRecord> record) {
         String table = config.getTableName();
         String massage = record.getMessage().toString();
-        int affectedRows = stmt.executeUpdate("insert into "+table+" values(now,"+massage+")");
+        String sql = "insert into "+table+" values(now,"+massage+")";
+
+        HttpClientPoolUtil.execute(url,sql);
     }
 
     

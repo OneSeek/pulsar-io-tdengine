@@ -25,7 +25,7 @@ public class TDengineSinkConfig implements Serializable {
             defaultValue = "",
             help = "The url of the TDengine instance to connect to"
     )
-    private String jdbcUrl;
+    private String url;
 
     @FieldDoc(
             required = true,
@@ -62,6 +62,6 @@ public class TDengineSinkConfig implements Serializable {
     }
 
     public void validate() {
-        Preconditions.checkNotNull(jdbcUrl, "tdenginedbUrl property not set.");
+        Preconditions.checkNotNull(url, "tdenginedbUrl property not set.");
     }
 }
