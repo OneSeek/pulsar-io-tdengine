@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.apache.commons.io.FileUtils.getFile;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 /**
  * TDengine Sink test
@@ -83,5 +85,16 @@ public class TDengineSinkTest {
         return record;
     }
 
+    @Test
+    public final void openTest() throws IOException {
+        File yamlFile = getFile("tdengine-sink-config.yaml");
+        String path = yamlFile.getAbsolutePath();
+        TDengineSinkConfig config = TDengineSinkConfig.load(path);
+        System.out.println(config.getUrl());
 
+        TSDBSession tsdbSession = new TSDBSession();
+        tsdbSession.create(config);
+
+
+    }
 }

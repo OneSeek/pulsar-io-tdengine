@@ -18,7 +18,7 @@ import java.util.Map;
 )
 @Slf4j
 public class TDengineSink implements Sink<byte[]> {
-    private TSDBSession tsdbSession = new TSDBSession();
+    private final TSDBSession tsdbSession = new TSDBSession();
     @Override
     public void open(Map<String, Object> map, SinkContext sinkContext) throws Exception {
 
@@ -30,7 +30,6 @@ public class TDengineSink implements Sink<byte[]> {
 
     @Override
     public void write(Record<byte[]> record){
-        System.out.println("***record内容***"+record);
         tsdbSession.write(record);
     }
 

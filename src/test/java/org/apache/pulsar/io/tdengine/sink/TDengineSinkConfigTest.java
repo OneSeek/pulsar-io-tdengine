@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.apache.commons.io.FileUtils.getFile;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
