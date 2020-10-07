@@ -18,17 +18,15 @@ public class TSDBSession {
     }
 
     public void write(Record<byte[]> record) {
-
         String result = HttpClientPoolUtil.execute(url_login);
-        System.out.println("创建TDengine连接成功："+result);
 
         String table = config.getTableName();
         String message = new String(record.getValue());
-        System.out.println("massage: " + message);
+
         String sql = "insert into "+table+" values(now,\""+message+"\")";
-        System.out.println(sql);
+
         String result1 = HttpClientPoolUtil.execute(url,sql);
-        System.out.println(result1);
+
     }
 
     
