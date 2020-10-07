@@ -38,10 +38,10 @@ public class TDengineSinkTest {
     @Test
     public void TestOpenAndWriteSink() throws Exception {
         Map<String, Object> configs = new HashMap<>();
-        configs.put("jdbcUrl", "jdbc:TAOS://localhost:6041/db");
+        configs.put("url", "http://localhost:6041");
         configs.put("userName", "root");
         configs.put("password", "taosdata");
-        configs.put("tableName", "test_jdbc");
+        configs.put("tableName", "db.test_jdbc");
 
         TDengineSink sink = new TDengineSink();
 
@@ -52,7 +52,7 @@ public class TDengineSinkTest {
         sink.open(configs, null);
 
         // write should success.
-//        sink.write(record);
+        sink.write(record);
 //        log.info("executed write");
 
         // sleep to wait backend flush complete
@@ -83,18 +83,5 @@ public class TDengineSinkTest {
             }
         }, value.getBytes(StandardCharsets.UTF_8));
         return record;
-    }
-
-    @Test
-    public final void openTest() throws IOException {
-        File yamlFile = getFile("tdengine-sink-config.yaml");
-        String path = yamlFile.getAbsolutePath();
-        TDengineSinkConfig config = TDengineSinkConfig.load(path);
-        System.out.println(config.getUrl());
-
-        TSDBSession tsdbSession = new TSDBSession();
-        tsdbSession.create(config);
-
-
     }
 }

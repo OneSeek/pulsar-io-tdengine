@@ -133,6 +133,53 @@ public class HttpClientPoolUtil {
         }
         return responseBody;
     }
+    public static String execute(String uri, String data,String auth) {
+        long startTime = System.currentTimeMillis();
+        HttpEntity httpEntity = null;
+        HttpEntityEnclosingRequestBase method = null;
+        String responseBody = "";
+        try {
+            if (httpClient == null) {
+                initPools();
+            }
+            method = (HttpEntityEnclosingRequestBase) getRequest(uri, HttpPost.METHOD_NAME, DEFAULT_CONTENT_TYPE, 0);
+            method.setEntity(new StringEntity(data));
+            method.setHeader("Authorization","Basic "+auth);
+            HttpContext context = HttpClientContext.create();
+            CloseableHttpResponse httpResponse = httpClient.execute(method, context);
+            httpEntity = httpResponse.getEntity();
+            if (httpEntity != null) {
+                responseBody = EntityUtils.toString(httpEntity, "UTF-8");
+            }
+        } catch (Exception e) {
+            if (method != null) {
+                method.abort();
+            }
+//            e.printStackTrace();
+//            logger.error("execute post request exception, url:" + uri + ", exception:" + e.toString()
+//                    + ", cost time(ms):" + (System.currentTimeMillis() - startTime));
+            new Exception("execute post request exception, url:"
+                    + uri + ", exception:" + e.toString() +
+                    ", cost time(ms):" + (System.currentTimeMillis() - startTime))
+                    .printStackTrace();
+        } finally {
+            if (httpEntity != null) {
+                try {
+                    EntityUtils.consumeQuietly(httpEntity);
+                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    logger.error("close response exception, url:" + uri + ", exception:" + e.toString()
+//                            + ", cost time(ms):" + (System.currentTimeMillis() - startTime));
+                    new Exception(
+                            "close response exception, url:" + uri +
+                                    ", exception:" + e.toString()
+                                    + ", cost time(ms):" + (System.currentTimeMillis() - startTime))
+                            .printStackTrace();
+                }
+            }
+        }
+        return responseBody;
+    }
     /**
      * * 创建请求
      * @param uri 请求url
