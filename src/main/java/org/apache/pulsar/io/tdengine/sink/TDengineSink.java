@@ -2,7 +2,6 @@ package org.apache.pulsar.io.tdengine.sink;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.apache.pulsar.client.api.schema.GenericRecord;
 import org.apache.pulsar.functions.api.Record;
 import org.apache.pulsar.io.core.Sink;
 import org.apache.pulsar.io.core.SinkContext;
@@ -18,20 +17,20 @@ import java.util.Map;
         configClass = TDengineSink.class
 )
 @Slf4j
-public class TDengineSink implements Sink<GenericRecord> {
+public class TDengineSink implements Sink<byte[]> {
     private TSDBSession tsdbSession = new TSDBSession();
     @Override
     public void open(Map<String, Object> map, SinkContext sinkContext) throws Exception {
 
         val config = TDengineSinkConfig.load(map);
         config.validate();
-
         tsdbSession.create(config);
 
     }
 
     @Override
-    public void write(Record<GenericRecord> record) throws Exception {
+    public void write(Record<byte[]> record){
+        System.out.println("***record内容***"+record);
         tsdbSession.write(record);
     }
 

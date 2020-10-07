@@ -16,7 +16,8 @@ public class TSDBSession {
                 +"/"+config.getPassword();
     }
 
-    public void write(Record<GenericRecord> record) {
+    public void write(Record<byte[]> record) {
+
         String table = config.getTableName();
         String massage = record.getMessage().toString();
         String sql = "insert into "+table+" values(now,"+massage+")";
