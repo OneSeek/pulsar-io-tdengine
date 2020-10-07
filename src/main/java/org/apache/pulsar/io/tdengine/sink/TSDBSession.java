@@ -14,8 +14,6 @@ public class TSDBSession {
         //http://<ip>:6041/rest/login/<username>/<password>
         url = config.getUrl()+"/rest/login/"+config.getUserName()
                 +"/"+config.getPassword();
-        System.out.println(url);
-
     }
 
     public void write(Record<GenericRecord> record) {
