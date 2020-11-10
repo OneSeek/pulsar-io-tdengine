@@ -9,11 +9,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class TSDBSession {
-    TDengineSinkConfig config;
-    Connection conn;
-    Statement stmt;
+    public static TDengineSinkConfig config;
+    public static Connection conn;
+    public static Statement stmt;
     public void create(TDengineSinkConfig config) throws SQLException {
-        this.config = config;
+        TSDBSession.config = config;
         String jdbcUrl = config.getJdbcUrl()+"?user="+config.getUserName()
                 +"?password="+config.getPassword();
 
