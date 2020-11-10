@@ -1,19 +1,32 @@
 package org.apache.pulsar.io.tdengine.sink;
 
+import org.apache.pulsar.client.api.schema.GenericRecord;
+import org.apache.pulsar.functions.api.Record;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class TSDBSession {
+    TDengineSinkConfig config;
+    Connection conn;
+    Statement stmt;
     public void create(TDengineSinkConfig config) throws SQLException {
+        this.config = config;
         String jdbcUrl = config.getJdbcUrl()+"?user="+config.getUserName()
                 +"?password="+config.getPassword();
 
-        Connection conn = DriverManager.getConnection(jdbcUrl);
+        conn = DriverManager.getConnection(jdbcUrl);
 
-        Statement stmt = conn.createStatement();
+        stmt = conn.createStatement();
 
+    }
+
+    public void write(Record<GenericRecord> record) throws SQLException {
+        String table = config.getTableName();
+        String massage = record.getMessage().toString();
+        int affectedRows = stmt.executeUpdate("insert into "+table+" values(now,"+massage+")");
     }
 
     

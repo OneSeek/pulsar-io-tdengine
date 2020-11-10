@@ -40,6 +40,7 @@ public class TDengineSinkConfigTest {
         File yamlFile = getFile("sinkConfig.yaml");
         String path = yamlFile.getAbsolutePath();
         TDengineSinkConfig config = TDengineSinkConfig.load(path);
+        System.out.println(config.getJdbcUrl());
         assertNotNull(config);
         assertEquals("jdbc:TAOS://localhost:6041/db", config.getJdbcUrl());
         assertEquals("root", config.getUserName());
