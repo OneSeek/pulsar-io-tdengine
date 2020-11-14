@@ -1,5 +1,5 @@
 configs:
   userName: "root"
   password: "taosdata"
-  url: "http://localhost:6030"
+  jdbcUrl: "jdbc:TAOS://localhost:6030/db"
   tableName: "test_jdbc"
