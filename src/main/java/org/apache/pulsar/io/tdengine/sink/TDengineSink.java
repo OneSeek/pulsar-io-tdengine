@@ -19,7 +19,7 @@ import java.util.Map;
 )
 @Slf4j
 public class TDengineSink implements Sink<GenericRecord> {
-    private TSDBSession tsdbSession;
+    private final TSDBSession tsdbSession = new TSDBSession();
     @Override
     public void open(Map<String, Object> map, SinkContext sinkContext) throws Exception {
 

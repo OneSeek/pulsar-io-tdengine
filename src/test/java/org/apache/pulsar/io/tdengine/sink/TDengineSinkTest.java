@@ -15,8 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.apache.commons.io.FileUtils.getFile;
-import static org.codehaus.plexus.util.FileUtils.getFile;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -89,7 +87,7 @@ public class TDengineSinkTest {
 
     @Test
     public final void openTest() throws IOException, SQLException, ClassNotFoundException {
-        File yamlFile = getFile("tdengine-sink-config.yaml");
+        File yamlFile = getFile("sinkConfig.yaml");
         String path = yamlFile.getAbsolutePath();
         TDengineSinkConfig config = TDengineSinkConfig.load(path);
         System.out.println(config.getJdbcUrl());
@@ -98,5 +96,9 @@ public class TDengineSinkTest {
         tsdbSession.create(config);
 
 
+    }
+    private File getFile(String name) {
+        ClassLoader classLoader = getClass().getClassLoader();
+        return new File(classLoader.getResource(name).getFile());
     }
 }
