@@ -1,6 +1,6 @@
 {
   "userName": "root",
   "password": "taosdata",
-  "jdbcUrl": "jdbc:TAOS://localhost:6041/db",
+  "jdbcUrl": "jdbc:TAOS://192.168.30.185:6030/db",
   "tableName": "test_jdbc"
 }

@@ -22,3 +22,13 @@ create table db.test_jdbc(ts timestamp,message binary(255));
 --sink-config-file ${sink配置文件目录}/tdengine-sink-config.yaml \
 --parallelism 1
 ```
+
+```shell script
+/home/chuang/ProgramData/apache-pulsar-2.6.2/bin/pulsar-admin sinks localrun \
+--archive /home/chuang/ProgramData/taos/pulsar-io-tdengine-1.0-SNAPSHOT.nar \
+--tenant public --namespace default \
+--inputs test-tdengine \
+--name pulsar-io-tdengine \
+--sink-config-file /home/chuang/ProgramData/taos/tdengine-sink-config.yaml \
+--parallelism 1
+```
