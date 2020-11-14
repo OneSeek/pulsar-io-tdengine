@@ -1,6 +1,5 @@
-{
-  "userName": "root",
-  "password": "taosdata",
-  "url": "http://localhost:6041",
-  "tableName": "test_jdbc"
-}
+configs:
+  userName: "root"
+  password: "taosdata"
+  url: "http://localhost:6030"
+  tableName: "test_jdbc"
